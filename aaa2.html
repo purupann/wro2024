@@ -1,0 +1,286 @@
+<html>
+    <head>
+        <base target="_top">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <script>
+            function viewportSet() {
+              var wsw = window.screen.width;
+              console.log(wsw);
+              if (wsw <= 660) {
+                // デバイス横幅660以下
+                document.querySelector("meta[name='viewport']").setAttribute("content", "width=device-width,initial-scale=0.8,viewport-fit=cover");
+              } else {
+                // それ以外
+                document.querySelector("meta[name='viewport']").setAttribute("content", "width=device-width");
+              }
+            }
+            window.addEventListener("DOMContentLoaded", viewportSet, false);
+            window.addEventListener("resize", viewportSet, false);
+            window.addEventListener("orientationchange", viewportSet, false);
+        </script>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Script-Type" content="text/javascript">
+        <title>Junior Ex - Scoring System</title>
+
+        <!--WEBフォントの引用-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@500;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:600,700&display=swap" rel="stylesheet">
+
+        <link href="/views/forms/ep_junior/tokyo1_r/index.css" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body onLoad="CurrentTime();">
+        <!--ヘッダー-->
+        <div class="headder">
+            <table>
+                <td class="nav-td">
+                    <!-- <div class="btn_menu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="30px" height="30px" style="padding-top: 3px;"><path d="M0 0h24v24H0z" fill="none"/><path d="M2 15.5v2h20v-2H2zm0-5v2h20v-2H2zm0-5v2h20v-2H2z"/></svg></div> -->
+                </td>
+                <td class="left-td">
+                    <label for="switch" class="switch_label">
+                        <div>
+                            <input type="checkbox" id="switch" />
+                            <div class="circle">JP</div>
+                            <div class="base"></div>
+                        </div>
+                    </label>
+                </td>
+                <td class="center-td">
+                    <a href="/wro_calc/home"><img src="/public/images/WRO-logo.png" class="image"></a><!--変更2024二見-->
+                    <p class="TitleEng">Junior Expert - Regular Challenge</p>
+                </td>
+                <td class="right-td">
+                    <p class="TitleEng">Current</p>
+                    <p class="TitleEng" id="CurrentTime-text">XX:XX:XX</p>
+                </td>
+                <td class="right-td">
+                </td>
+            </table>
+        </div>
+
+        <!--メイン-->
+        <div class="area">
+            <br>
+            <!--確認画面-->
+            <table class="check" style="width:60%">
+                <tr>
+                    <td style="width:30%">
+                        <p class="check_label_ja">チーム名</p>
+                        <p class="check_label_en">Team Name</p>
+                    </td>
+                    <td id="Teamname-text">いちょう</td>
+                </tr>
+                <tr>
+                    <td style="width:30%">
+                        <p class="check_label_ja">ラウンド</p>
+                        <p class="check_label_en">Round</p>
+                    </td>
+                    <td id="Round-text">
+                         1st 
+                        
+                        
+                        
+                    </td>
+                </tr>
+            </table>
+            <br>
+
+            <table class="check">
+                <tr style="background-color: white;">
+                    <th style="width: 60%;">
+                        <p class="check_label_ja">ミッション</p>
+                        <p class="check_label_en">Missions</p>
+                    </th>
+                    <th style="width: 10%;">
+                        <p class="check_label_ja">点数</p>
+                        <p class="check_label_en">Points</p>
+                    </th>
+                    <th style="width: 10%;">
+                        <p class="check_label_ja">最大</p>
+                        <p class="check_label_en">Max.</p>
+                    </th>
+                    <th style="width: 10%;">
+                        <p class="check_label_ja">個数</p>
+                        <p class="check_label_en">#</p>
+                    </th>
+                    <th style="width: 10%;">
+                        <p class="check_label_ja">計</p>
+                        <p class="check_label_en">Total</p>
+                    </th>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">【新しい緑地を作る】</p>
+                        <p class="check_label_en">【Create new green areas】</p>
+                    </td>
+                    <td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">湖要素もしくは緑地要素が緑地公園エリアに部分的に入っている</p>
+                        <p class="check_label_en">Lake or green element partly in a green park area</p>
+                    </td>
+                    <td style="background-color: lightgray;">4</td>
+                    <td style="background-color: lightgray;"></td>
+                    <td id="check_M1-1">0</td>
+                    <td id="check_M1-1_Total">0</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">湖要素もしくは緑地要素が緑地公園エリアに完全に入っている</p>
+                        <p class="check_label_en">Lake or green element completely in a green park area</p>
+                    </td>
+                    <td style="background-color: lightgray;">8</td>
+                    <td style="background-color: lightgray;">48</td>
+                    <td id="check_M1-2">0</td>
+                    <td id="check_M1-2_Total">0</td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">【家の緑化】</p>
+                        <p class="check_label_en">【Greening houses】</p>
+                    </td>
+                    <td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">緑化スターターセットが家の灰色のエリアに部分的に入っている</p>
+                        <p class="check_label_en">Green starter set partly in grey area of a house</p>
+                    </td>
+                    <td style="background-color: lightgray;">4</td>
+                    <td style="background-color: lightgray;"></td>
+                    <td id="check_M2-1">0</td>
+                    <td id="check_M2-1_Total">0</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">緑化スターターセットが家の灰色のエリアに完全に入っている<br>(中央の家の中にある緑色のエリアは灰色のエリアに属する)</p>
+                        <p class="check_label_en">Green starter set completely in a grey area of a house<br>(the green area inside the middle house belongs to the grey area)</p>
+                    </td>
+                    <td style="background-color: lightgray;">8</td>
+                    <td style="background-color: lightgray;">24</td>
+                    <td id="check_M2-2">0</td>
+                    <td id="check_M2-2_Total">0</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">追加点: 緑化スターターセットが家の中にありドアが閉じている</p>
+                        <p class="check_label_en">Additionally: Green starter set is inside the house and door closed</p>
+                    </td>
+                    <td style="background-color: lightgray;"></td>
+                    <td style="background-color: lightgray;">8</td>
+                    <td id="check_M2-3">0</td>
+                    <td id="check_M2-3_Total">0</td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">【充電と接続】</p>
+                        <p class="check_label_en">【Electrical charging and connection】</p>
+                    </td>
+                    <td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">電動自転車が充電エリアAに完全に入っている</p>
+                        <p class="check_label_en">E-Bike is completely inside the charging area A</p>
+                    </td>
+                    <td style="background-color: lightgray;">7</td>
+                    <td style="background-color: lightgray;">14</td>
+                    <td id="check_M3-1">2</td>
+                    <td id="check_M3-1_Total">14</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">ケーブルが充電エリアBに触れている</p>
+                        <p class="check_label_en">Cable is touching the charging area B</p>
+                    </td>
+                    <td style="background-color: lightgray;">5</td>
+                    <td style="background-color: lightgray;"></td>
+                    <td id="check_M3-2">0</td>
+                    <td id="check_M3-2_Total">0</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">ケーブルが充電エリアBに完全に入っている</p>
+                        <p class="check_label_en">Cable is completely in the charging area B</p>
+                    </td>
+                    <td style="background-color: lightgray;"></td>
+                    <td style="background-color: lightgray;">11</td>
+                    <td id="check_M3-3">1</td>
+                    <td id="check_M3-3_Total">11</td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">【フェンスとアパートへのボーナス】</p>
+                        <p class="check_label_en">【Bonus for fences & Apartment houses】</p>
+                    </td>
+                    <td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">アパートが壊れたり動いたりしていない</p>
+                        <p class="check_label_en">Apartment house is not damaged or moved</p>
+                    </td>
+                    <td style="background-color: lightgray;">3</td>
+                    <td style="background-color: lightgray;">6</td>
+                    <td id="check_M4-1">2</td>
+                    <td id="check_M4-1_Total">6</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">フェンスが壊れたり動いたりしていない</p>
+                        <p class="check_label_en">Fence is not damaged or moved</p>
+                    </td>
+                    <td style="background-color: lightgray;">3</td>
+                    <td style="background-color: lightgray;">9</td>
+                    <td id="check_M4-2">3</td>
+                    <td id="check_M4-2_Total">9</td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">【サプライズルール】</p>
+                        <p class="check_label_en">【Surprise Rule】</p>
+                    </td>
+                    <td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="check_label_ja">サプライズルールの得点</p>
+                        <p class="check_label_en">Points for Surprise Rule</p>
+                    </td>
+                    <td style="background-color: lightgray;"></td>
+                    <td style="background-color: lightgray;"></td>
+                    <td id="check_M5-1">0</td>
+                    <td id="check_M5-1_Total">0</td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">最高点数</p>
+                        <p class="check_label_en">Maximum Score</p>
+                    </td>
+                    <td></td><td>120</td><td></td><td></td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">今回の得点</p>
+                        <p class="check_label_en">Total Score in this run</p>
+                    </td>
+                    <td></td><td></td><td></td><td id="Point-text">40</td>
+                </tr>
+                <tr style="background-color: lightgray;">
+                    <td>
+                        <p class="check_label_ja">タイム(秒)</p>
+                        <p class="check_label_en">Time in full seconds</p>
+                    </td>
+                    <td></td><td></td><td></td><td id="Time-text">31.81</td>
+                </tr>
+            </table>
+        </div>
+        <button class="print_button" id="printbutton">印刷</button>
+        <script type="text/javascript" src="/public/javascripts/check_timing.js"></script>
+    </body>
+</html>
